@@ -284,7 +284,10 @@ onload = function()
       // モデル描画
       gl.useProgram(prg_skin);
 
-      // 描画用行列の設定【この行列の設定をどうにかする】
+      // 描画用行列の設定【この行列の設定をどうにかする】（らしい）
+	    var m1 = mat.create();
+      mat.multiply(a_wMatrix[0], a_lMatrix[1], m1 );
+      mat.multiply(m1, a_bMatrixInverse[1], m1 );
       gl.bindBuffer(gl.UNIFORM_BUFFER, aUBO[2]);
       gl.bufferData(gl.UNIFORM_BUFFER, new Float32Array([
 	// 関節 0
@@ -293,10 +296,8 @@ onload = function()
         a_wMatrix[0][8], a_wMatrix[0][9], a_wMatrix[0][10], a_wMatrix[0][11],
         a_wMatrix[0][12], a_wMatrix[0][13], a_wMatrix[0][14], a_wMatrix[0][15],
 	// 関節 1
-        a_wMatrix[0][0], a_wMatrix[0][1], a_wMatrix[0][2], a_wMatrix[0][3],
-        a_wMatrix[0][4], a_wMatrix[0][5], a_wMatrix[0][6], a_wMatrix[0][7],
-        a_wMatrix[0][8], a_wMatrix[0][9], a_wMatrix[0][10], a_wMatrix[0][11],
-        a_wMatrix[0][12], a_wMatrix[0][13], a_wMatrix[0][14], a_wMatrix[0][15],
+       m1[0],m1[1],m1[2],m1[3],m1[4],m1[5],m1[6],m1[7],
+	m1[8],m1[9],m1[10],m1[11],m1[12],m1[13],m1[14],m1[15]
       ]), gl.DYNAMIC_DRAW);
       gl.bindBuffer(gl.UNIFORM_BUFFER, null);
 
